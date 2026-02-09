@@ -50,9 +50,12 @@ auth_router.post('/provider/signup', ClerkMiddleAuth, async (req, res) => {
         [first_name, last_name, email]
       );
 
-      await db.query("INSERT INTO Customer ( first_name, last_name, email) VALUES ($1, $2, $3);", 
+      const checkExistCustomer = await db.query("SELECT * FROM Customer WHERE email = $1", [email]);
+      if(checkExistCustomer.rows.length === 0) {
+        await db.query("INSERT INTO Customer ( first_name, last_name, email) VALUES ($1, $2, $3);", 
         [first_name, last_name, email]
       ); 
+      }
       
       return res.sendStatus(201);
     } 
@@ -67,17 +70,12 @@ auth_router.post('/provider/signup', ClerkMiddleAuth, async (req, res) => {
 // Check if email is a provider
 auth_router.get('/isprovider', ClerkMiddleAuth, async (req, res) => {
   try {
-    const {first_name, last_name, email} = req.params;
+    const {email} = req.query;
     const clerkId = req.clerkId;
     
-    if(!first_name || !last_name || !email) return res.sendStatus(400);
+    if(!email) return res.sendStatus(400);
 
     const checkExist = await db.query("SELECT * FROM Service_providers WHERE email = $1", [email]);
-    if(checkExist.rows.length > 0) {
-      return res.status(200).json({
-        "message": "user exists"
-      });
-    }
 
     if (checkExist.rows.length > 0) {
       res.json({ isProvider: true });
@@ -86,6 +84,7 @@ auth_router.get('/isprovider', ClerkMiddleAuth, async (req, res) => {
     } 
   } 
   catch (err) {
+    console.error("Error in is-provider check:", err);
     if(err.code === '23505') {
       return res.sendStatus(409);
     }
