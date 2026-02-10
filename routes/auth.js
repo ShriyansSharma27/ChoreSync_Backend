@@ -7,7 +7,6 @@ const { ClerkMiddleAuth } = require('../middleware/authToken');
 auth_router.post('/customer/signup', async (req, res) => {
     try {
       const {first_name, last_name, email} = req.body;
-      const clerkId = req.clerkId;
       if (!first_name || !last_name || !email) return res.sendStatus(400);
 
       const checkExist = await db.query("SELECT * FROM Customer WHERE email = $1", [email]);
@@ -35,7 +34,6 @@ auth_router.post('/customer/signup', async (req, res) => {
 auth_router.post('/provider/signup', async (req, res) => {
     try {
       const {first_name, last_name, email} = req.body;
-      const clerkId = req.clerkId;
       
       if(!first_name || !last_name || !email) return res.sendStatus(400);
 
@@ -71,7 +69,6 @@ auth_router.post('/provider/signup', async (req, res) => {
 auth_router.get('/isprovider', ClerkMiddleAuth, async (req, res) => {
   try {
     const {email} = req.query;
-    const clerkId = req.clerkId;
     
     if(!email) return res.sendStatus(400);
 
@@ -82,6 +79,28 @@ auth_router.get('/isprovider', ClerkMiddleAuth, async (req, res) => {
     } else {
       res.json({ isProvider: false });
     } 
+  } 
+  catch (err) {
+    console.error("Error in is-provider check:", err);
+    if(err.code === '23505') {
+      return res.sendStatus(409);
+    }
+    return res.sendStatus(500);
+  }
+});
+
+// Upgrade role
+auth_router.post('/upgrade-role', ClerkMiddleAuth, async (req, res) => {
+  try {
+    const {first_name, last_name, email} = req.body;
+    
+    if(!email) return res.sendStatus(400);
+
+    await db.query("INSERT INTO Service_providers (first_name, last_name, email) values ($1,$2,$3) ON CONFLICT (email) DO NOTHING", 
+        [first_name, last_name, email]
+      );
+
+      return res.sendStatus(201);
   } 
   catch (err) {
     console.error("Error in is-provider check:", err);
