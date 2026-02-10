@@ -42,4 +42,36 @@ customer_router.post('/purchase', async (req, res) => {
   }
 });
 
+// Grab customer orders
+customer_router.post('/get_services', async(req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ message: "Email is required" });
+
+    const querySql = `
+      SELECT 
+        s.service_name, 
+        s.service_details, 
+        s.service_price, 
+        s.image_url, 
+        bs.service_timestamp as date, 
+        bs.service_timestamp as time
+      FROM Bought_services bs
+      JOIN Services s ON bs.service_id = s.service_id
+      JOIN Customer c ON bs.customer_id = c.customer_id
+      WHERE c.email = $1
+      ORDER BY bs.bought_time DESC;
+    `;
+
+    let grabServices = await db.query(querySql, [email]);
+    grabServices = grabServices.rows;
+
+    return res.json({"data": grabServices});
+  }
+  catch(err) {
+    console.error("Finding order error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = customer_router;
