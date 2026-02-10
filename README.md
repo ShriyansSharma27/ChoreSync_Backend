@@ -1,6 +1,4 @@
-# ChoreSync_Backend
-
-# ChoreSync Backend (Services.ae)
+# ChoreSync Backend 
 
 A robust Node.js/Express API designed for a home services marketplace. This backend manages multi-role authentication, service listings, and secure payment processing using Clerk, Stripe, and PostgreSQL.
 
