@@ -26,7 +26,7 @@ A robust Node.js/Express API designed for a home services marketplace. This back
 
 ## API Endpoints
 
-### Authentication (`/auth`)
+### Authentication 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/auth/customer/signup` | Records a new customer in the database. |
@@ -34,7 +34,7 @@ A robust Node.js/Express API designed for a home services marketplace. This back
 | `GET` | `/auth/isprovider` | Checks if the authenticated user is a provider. |
 | `POST` | `/auth/upgrade-role` | Upgrades an existing customer to a service provider. |
 
-### Provider Management (`/api/provider`)
+### Provider Management 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/add_service` | Lists a new service (prevents duplicates). |
@@ -43,7 +43,7 @@ A robust Node.js/Express API designed for a home services marketplace. This back
 | `PUT` | `/modify_service` | Updates service details or images. |
 | `DELETE`| `/remove_service` | Deletes a service (blocked if active orders exist). |
 
-### Customer & Orders (`/api/customer`)
+### Customer & Orders
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/purchase` | Records bulk service purchases with timestamps. |
