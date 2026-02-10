@@ -65,10 +65,10 @@ The `/provider/signup` route is designed for atomicity. It checks if a provider 
 
 ---
 
-## 💻 Local Setup
+## Local Setup
 
 1. **Clone & Install:**
    ```bash
-   git clone <your-repo-link>
+   git clone (https://github.com/ShriyansSharma27/ChoreSync_Backend)
    cd <repo-folder>
    npm install
