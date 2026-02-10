@@ -4,7 +4,7 @@ const db = require('../config');
 const { ClerkMiddleAuth } = require('../middleware/authToken');
 
 // Customer auth endpoints
-auth_router.post('/customer/signup', ClerkMiddleAuth, async (req, res) => {
+auth_router.post('/customer/signup', async (req, res) => {
     try {
       const {first_name, last_name, email} = req.body;
       const clerkId = req.clerkId;
@@ -32,7 +32,7 @@ auth_router.post('/customer/signup', ClerkMiddleAuth, async (req, res) => {
 });
 
 // Service provider auth endpoints
-auth_router.post('/provider/signup', ClerkMiddleAuth, async (req, res) => {
+auth_router.post('/provider/signup', async (req, res) => {
     try {
       const {first_name, last_name, email} = req.body;
       const clerkId = req.clerkId;
