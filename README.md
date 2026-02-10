@@ -48,7 +48,7 @@ A robust Node.js/Express API designed for a home services marketplace. This back
 | :--- | :--- | :--- |
 | `POST` | `/purchase` | Records bulk service purchases with timestamps. |
 
-### Payments (`/`)
+### Payments
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
 | `POST` | `/checkout-session` | Generates a Stripe Checkout URL for payments. |
@@ -65,10 +65,5 @@ The `/provider/signup` route is designed for atomicity. It checks if a provider 
 
 ---
 
-## Local Setup
-
-1. **Clone & Install:**
-   ```bash
-   git clone (https://github.com/ShriyansSharma27/ChoreSync_Backend)
-   cd <repo-folder>
-   npm install
+## Author
+   - Shriyans Sharma
