@@ -6,7 +6,7 @@ const payment_router = express.Router();
 payment_router.post('/checkout-session', async(req, res) => {
     try {
         const {amount} = req.body;
-        const unitAmount = Math.round(parseFloat(amount) * 100);
+        const unitAmount = Math.round(parseFloat(amount));
         const sess = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{
